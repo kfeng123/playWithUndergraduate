@@ -47,13 +47,27 @@
 
 现在你写好了你的个人介绍。请先更新你的repo防止冲突，然后请把repo推送到你的账号下：
 ```
-    git pull upstream master
     git add .
     git commit -m "hello world!"
     git push origin master
 ``
 然后在你的repo（不是我的repo！！）里已经有了你刚才写的东西了。然后请你点击New pull request向我发送pull request。当我看到你的pull request并审阅你的pull request觉得没问题时，我会接受你的pull request。这样我的repo里也有了你的更改。
+           
+请注意两点：
+1、每次你改本地repo之后，都请你push到你的github账号上，也就是说：
+```
+    git add .
+    git commit -m "xxx"
+    git push origin master
+```
+最好经常写。
+
+2、请务必经常执行下面的命令，来更新你的repo（因为别的同学也会更改repo，所以你的repo并不随时都是最新的，如果不是最新的，我这边无法接受你的pull request）。
+```
+    git pull --rebase upstream master
+```
 
 这就完成了作业的提交。这也是在github上为开源repo贡献代码的方式。
 
-～～~
+
+~~~
