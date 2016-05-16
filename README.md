@@ -3,11 +3,11 @@
 大家好，我是助教，这里是我建立的统计计算课程的repo。请大家把作业交到这个上面来。
 #### How it works
 
-请同学们首先注册github的账号。下载git软件，github好像有一系列新手教程的吧。
+请同学们首先注册github的账号，注册后会有简单的教程。针对自己的操作系统下载git软件。
 
 把这个repo fork到自己的账号里，方法是：点击右上角的Fork按钮。
 
-这是，你的账号里有一个repo的复制了，网站应该会自动跳转到xxx/playWithUndergraduate，其中xxx是你的账号。
+这时你的账号里有一个repo的复制了，网站应该会自动跳转到xxx/playWithUndergraduate，其中xxx是你的账号。
 
 我们的工作模式是，你们在自己账号中的repo里写作业，然后向我提交pull request来交作业。
 
@@ -51,7 +51,7 @@
     git commit -m "hello world!"
     git push origin master
 ```
-(注意第一次执行要按照提示设置你的邮箱和账号)然后在你的repo（不是我的repo！！）里已经有了你刚才写的东西了。然后请你点击New pull request向我发送pull request。当我看到你的pull request并审阅你的pull request觉得没问题时，我会接受你的pull request。这样我的repo里也有了你的更改。
+(注意第一次执行要按照提示设置你的邮箱和账号)然后在你的repo（不是我的repo！！）里已经有了你刚才写的东西了。然后请你点击New pull request向我发送pull request,按照提示填写。当我看到你的pull request并审阅你的pull request觉得没问题时，我会接受你的pull request。这样我的repo里也有了你的更改。
            
 请注意两点：
 1、每次你改本地repo之后，都请你push到你的github账号上，也就是说：
@@ -62,12 +62,19 @@
 ```
 最好经常写。
 
-2、请务必经常执行下面的命令，来更新你的repo（因为别的同学也会更改repo，所以你的repo并不随时都是最新的，如果不是最新的，我这边无法接受你的pull request）。
+2、请务必经常执行下面的命令，来更新你的repo（因为别的同学也会更改repo，所以你的repo并不随时都是最新的，这条命令可以让你看到别人的作业以及其他更行）。
 ```
     git pull --rebase upstream master
 ```
 
 这就完成了作业的提交。这也是在github上为开源repo贡献代码的方式。
 
+#### Rmarkdown
 
-~~~
+我个人建议大家使用Rmarkdown来完成作业。原因只有一个：快速。使用Rmarkdown进行写作，当你写完代码时，你会发现你自己也完成了文档的撰写。这个东西上手也是很快的。
+
+
+同学们如果在软件安装、环境配置方面遇到困难，可以直接联系我邮箱，或者点击这个项目上面的那个Issues发帖(虽然那个一般是用来提价BUG的)，我会帮助大家的。^_^
+
+
+~~~~~~~
