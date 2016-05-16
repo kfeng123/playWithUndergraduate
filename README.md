@@ -45,21 +45,14 @@
 
 以后你们写作业都放到你们自己建立的目录里，不要动其他人的目录，防止发生conflict。
 
-现在你写好了你的个人介绍。然后请把repo推送到你的账号下：
+现在你写好了你的个人介绍。请先更新你的repo防止冲突，然后请把repo推送到你的账号下：
 ```
+    git pull upstream master
     git add .
     git commit -m "hello world!"
     git push origin master
 ``
 然后在你的repo（不是我的repo！！）里已经有了你刚才写的东西了。然后请你点击New pull request向我发送pull request。当我看到你的pull request并审阅你的pull request觉得没问题时，我会接受你的pull request。这样我的repo里也有了你的更改。
 
-这就完成了作业的提交。
+这就完成了作业的提交。这也是在github上为开源repo贡献代码的方式。
 
-需要注意的是。以后每次交作业前，你们都需要做一件事：
-```
-    git pull upstream master
-    git push origin master
-```
-然后再。这是由于，我们的repo是多人协作的，你需要保持你账号里的repo和你本地的repo是最新的。这条命令更新你的repo。
-
-`
