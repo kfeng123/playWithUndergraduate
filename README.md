@@ -50,8 +50,8 @@
     git add .
     git commit -m "hello world!"
     git push origin master
-``
-然后在你的repo（不是我的repo！！）里已经有了你刚才写的东西了。然后请你点击New pull request向我发送pull request。当我看到你的pull request并审阅你的pull request觉得没问题时，我会接受你的pull request。这样我的repo里也有了你的更改。
+```
+(注意第一次执行要按照提示设置你的邮箱和账号)然后在你的repo（不是我的repo！！）里已经有了你刚才写的东西了。然后请你点击New pull request向我发送pull request。当我看到你的pull request并审阅你的pull request觉得没问题时，我会接受你的pull request。这样我的repo里也有了你的更改。
            
 请注意两点：
 1、每次你改本地repo之后，都请你push到你的github账号上，也就是说：
