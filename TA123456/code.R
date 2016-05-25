@@ -1,6 +1,8 @@
 library(ggplot2)
 library(readr)
 library(dotwhisker)
+library(glmnet)
+library(MASS)
 set.seed(100L)
 
 myData=read_csv("w_logret_3automanu.csv",col_names=FALSE)
@@ -15,7 +17,7 @@ plot(myFit1,which=1:6,ask=FALSE,id.n=3)
 # : and * is different
 ?formula
 
-myFit2=update(myFit,.~.-1)
+myFit2=update(myFit1,.~.-1)
 
 dwplot(list(myFit1,myFit2))+
     theme_bw()+
@@ -23,7 +25,7 @@ dwplot(list(myFit1,myFit2))+
 confint(myFit1)
 
 tmp= 1:709 %in% 402
-myFit3=update(myFit,subset=!tmp)
+myFit3=update(myFit1,subset=!tmp)
 plot(myFit3,which=1:6,ask=FALSE,id.n=3)
 dwplot(list(myFit1,myFit3))+
     theme_bw()+
@@ -33,7 +35,7 @@ dwplot(list(myFit1,myFit3))+
 tmp=1:709 %in% c(402,
                  334,644)
 
-myFit4=update(myFit,subset=!tmp)
+myFit4=update(myFit1,subset=!tmp)
 plot(myFit4,which=1:6,ask=FALSE,id.n=3)
 dwplot(list(myFit3,myFit4))+
     theme_bw()+
@@ -64,3 +66,42 @@ myData1=myData[-402,]
 right1=lm(GM~.,data=myData1)
 
 right1$residuals[c(334,643,311)]
+
+
+## prediction
+
+
+myFit5=update(myFit1,.~Ford-1)
+tmpData=myData
+tmpData[,c("lc","uc")]=predict(myFit5,myData,level=0.95,interval="confidence")[,c(2,3)]
+tmpData[,c("lp","up")]=predict(myFit5,myData,level=0.95,interval="prediction")[,c(2,3)]
+
+ggplot(data=tmpData)+
+  geom_line(aes(x=Ford,y=lc),color="red",linetype=2)+
+  geom_line(aes(x=Ford,y=uc),color="red",linetype=2)+
+  geom_line(aes(x=Ford,y=lp),color="green",linetype=2)+
+  geom_line(aes(x=Ford,y=up),color="green",linetype=2)+
+  geom_abline(intercept = 0,slope = myFit5$coefficients[["Ford"]])+
+  ylab("GM")
+
+## feature engineering
+for(i in 1:4){
+  myData[,paste("featureT",i,sep="")]=1*(myData$Toyota>quantile(abs(myData$Toyota),i/5))
+}
+
+for(i in 1:4){
+  myData[,paste("featureF",i,sep="")]=1*(myData$Ford>quantile(abs(myData$Ford),i/5))
+}
+
+inT=sample(1:nrow(myData),600)
+training=myData[inT,]
+testing=myData[-inT,]
+pFit1=lm(GM~(.)^2,training)
+sum((predict(pFit1,testing)-testing$GM)^2)
+pFit2=lm(GM~Ford,training)
+sum((predict(pFit2,testing)-testing$GM)^2)
+
+pFit3=lm.ridge(GM~(.)^2,training,lambda=c(0,0.01,0.1,1,10,100,1000))
+
+
+lm.ridge(GM~(.)^2,training,lambda=100,model=TRUE)
