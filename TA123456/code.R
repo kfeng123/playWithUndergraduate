@@ -2,7 +2,7 @@ library(ggplot2)
 library(readr)
 library(dotwhisker)
 library(glmnet)
-library(MASS)
+
 set.seed(100L)
 
 myData=read_csv("w_logret_3automanu.csv",col_names=FALSE)
@@ -86,11 +86,11 @@ ggplot(data=tmpData)+
 
 ## feature engineering
 for(i in 1:4){
-  myData[,paste("featureT",i,sep="")]=1*(myData$Toyota>quantile(abs(myData$Toyota),i/5))
+  myData[,paste("featureT",i,sep="")]=factor(1*(myData$Toyota>quantile(abs(myData$Toyota),i/5)))
 }
 
 for(i in 1:4){
-  myData[,paste("featureF",i,sep="")]=1*(myData$Ford>quantile(abs(myData$Ford),i/5))
+  myData[,paste("featureF",i,sep="")]=factor(1*(myData$Ford>quantile(abs(myData$Ford),i/5)))
 }
 
 inT=sample(1:nrow(myData),600)
@@ -101,7 +101,21 @@ sum((predict(pFit1,testing)-testing$GM)^2)
 pFit2=lm(GM~Ford,training)
 sum((predict(pFit2,testing)-testing$GM)^2)
 
-pFit3=lm.ridge(GM~(.)^2,training,lambda=c(0,0.01,0.1,1,10,100,1000))
 
 
-lm.ridge(GM~(.)^2,training,lambda=100,model=TRUE)
+tmp=model.matrix(GM~(.)^2,training)
+tmp=as.data.frame(tmp)
+glmFit=glmnet(as.matrix(tmp),as.matrix(training$GM),family="gaussian")
+coef(glmFit,s=0.01)
+plot(glmFit)
+
+glmFit2=cv.glmnet(as.matrix(tmp),
+                  as.matrix(training$GM),
+                  family="gaussian",
+                  nfolds=10,
+                  lambda=c(1e-5,0.0001,0.001,0.01,0.1,1,10,100))
+
+plot(glmFit2)
+coef(glmFit,s=1e-4)
+myPre=predict.glmnet(glmFit,model.matrix(GM~(.)^2,testing),s=1e-4)
+sum((myPre-testing$GM)^2)
